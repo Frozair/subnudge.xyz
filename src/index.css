@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 247 244 236;
+  --ink: 18 26 53;
+  --card: 255 250 240;
+  --line: 215 209 196;
+  --mint: 22 152 115;
+  --coral: 217 95 67;
+  --sky: 42 120 255;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: rgb(var(--ink));
+  background:
+    radial-gradient(circle at 12% 8%, rgba(42, 120, 255, 0.12), transparent 42%),
+    radial-gradient(circle at 88% 16%, rgba(217, 95, 67, 0.12), transparent 40%),
+    linear-gradient(180deg, #fbf8f0 0%, #f3efe5 100%);
+}
+
+::selection {
+  background: rgba(42, 120, 255, 0.2);
+  color: rgb(var(--ink));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
