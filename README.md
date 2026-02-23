@@ -32,7 +32,7 @@ npm install
 npm run dev
 ```
 
-Vite is configured to use port `3000`.
+Vite is configured to use port `3505`.
 
 ## Build
 
@@ -45,8 +45,8 @@ npm run preview
 
 Examples:
 
-- `http://localhost:3000/twitch/callback?code=test123&state=abc`
-- `http://localhost:3000/twitch/callback?error=access_denied&error_description=User%20cancelled`
+- `http://localhost:3505/twitch/callback?code=test123&state=abc`
+- `http://localhost:3505/twitch/callback?error=access_denied&error_description=User%20cancelled`
 
 ## Vercel Notes
 

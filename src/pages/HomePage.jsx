@@ -1,29 +1,31 @@
-import { ArrowRight, BellRing, ClipboardList, Sparkles, UsersRound } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import WaitlistForm from '../components/WaitlistForm'
 
-const painPoints = [
-  'Check Twitch subs and compare against last month by hand',
-  'Guess who probably expired (especially Prime-heavy audiences)',
-  'Track contact notes in spreadsheets, Notion, or DMs',
-  'Remember who you already nudged and who still needs a follow-up',
+const quickPoints = [
+  'Track likely expirations',
+  'Keep notes + tags per supporter',
+  'Review who needs a nudge',
 ]
 
-const outcomes = [
+const snapshots = [
   {
-    title: 'Sync and compare',
-    body: 'See who is active now and who likely dropped off based on list diffs, without pretending to know exact Twitch expiry timestamps.',
-    icon: ClipboardList,
+    title: 'Dashboard',
+    caption: 'Current app snapshot',
+    src: '/snapshots/dashboard-screen.png',
+    alt: 'SubNudge dashboard snapshot',
   },
   {
-    title: 'Keep context with each supporter',
-    body: 'Store Discord handles, notes, and tags so follow-ups stay personal instead of turning into generic blasts.',
-    icon: UsersRound,
+    title: 'Supporters',
+    caption: 'List and state views',
+    src: '/snapshots/supporters-states.png',
+    alt: 'SubNudge supporters list snapshot',
   },
   {
-    title: 'Run a monthly nudge review',
-    body: 'Open a focused “Needs Attention” list and work through it manually when you are ready.',
-    icon: BellRing,
+    title: 'Supporter detail',
+    caption: 'Notes and nudge context',
+    src: '/snapshots/supporter-detail-states.png',
+    alt: 'SubNudge supporter detail snapshot',
   },
 ]
 
@@ -41,11 +43,11 @@ export default function HomePage() {
           </p>
 
           <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-5xl lg:text-[3.35rem]">
-            Track subscriber changes and send better follow-ups without the spreadsheet ritual.
+            Stop tracking Twitch subs in spreadsheets.
           </h1>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-ink/75 sm:text-lg">
-            SubNudge is built for creators who know their supporters personally and want a cleaner monthly workflow for manual, human-in-the-loop nudges.
+            SubNudge gives you a cleaner way to review subscriber changes and send personal follow-ups.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -64,13 +66,14 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            {painPoints.map((item) => (
-              <div key={item} className="rounded-2xl border border-line/90 bg-white/70 p-4 shadow-panel backdrop-blur">
-                <p className="text-sm leading-6 text-ink/80">{item}</p>
-              </div>
+          <ul className="mt-7 grid max-w-xl gap-3 sm:grid-cols-2">
+            {quickPoints.map((item) => (
+              <li key={item} className="flex items-center gap-2 rounded-2xl border border-line/90 bg-white/70 px-3 py-3 text-sm text-ink/85 shadow-panel backdrop-blur">
+                <CheckCircle2 className="h-4 w-4 text-mint" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div id="waitlist" className="lg:sticky lg:top-8">
@@ -79,39 +82,25 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto mt-4 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-4 rounded-3xl border border-line bg-white/85 p-5 shadow-soft backdrop-blur sm:p-6 lg:grid-cols-3">
-          {outcomes.map(({ title, body, icon: Icon }) => (
-            <article key={title} className="rounded-2xl border border-line/70 bg-card/80 p-4">
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky/10 text-sky">
-                <Icon className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <h2 className="mt-3 text-base font-semibold tracking-tight text-ink">{title}</h2>
-              <p className="mt-2 text-sm leading-6 text-ink/70">{body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto mt-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 rounded-3xl border border-line bg-[#0b132a] p-6 text-white shadow-soft sm:p-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/70">Who it&apos;s for</p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-              Small to mid Twitch creators with real relationships to their supporters
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">
-              SubNudge is especially useful when your audience includes a lot of Prime subs and your retention workflow depends on personal reminders, not fully automated campaigns.
-            </p>
+        <div className="rounded-3xl border border-line bg-white/85 p-5 shadow-soft backdrop-blur sm:p-6">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">Snapshots</p>
+              <h2 className="mt-2 text-xl font-semibold tracking-tight text-ink sm:text-2xl">What the app already looks like</h2>
+            </div>
+            <p className="text-sm text-ink/65">Current internal snapshot images from the mobile app build.</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-sm font-semibold">Current monthly loop (what SubNudge replaces)</p>
-            <ol className="mt-3 space-y-2 text-sm leading-6 text-white/80">
-              <li>1. Check/export current subscribers</li>
-              <li>2. Update spreadsheet manually</li>
-              <li>3. Guess who expired</li>
-              <li>4. DM or text supporters manually</li>
-              <li>5. Repeat next month</li>
-            </ol>
+
+          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+            {snapshots.map((item) => (
+              <figure key={item.title} className="overflow-hidden rounded-2xl border border-line/80 bg-card/80">
+                <img src={item.src} alt={item.alt} className="h-48 w-full object-cover object-top sm:h-56 lg:h-44" loading="lazy" />
+                <figcaption className="flex items-center justify-between gap-2 border-t border-line/70 px-3 py-2.5">
+                  <span className="text-sm font-semibold text-ink">{item.title}</span>
+                  <span className="text-xs text-ink/60">{item.caption}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
@@ -121,9 +110,9 @@ export default function HomePage() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Next step</p>
             <p className="mt-2 text-xl font-semibold tracking-tight text-ink">
-              Get early access before Twitch connect and sync flows go live.
+              Join the waitlist for early access.
             </p>
-            <p className="mt-1 text-sm text-ink/70">Local waitlist stub for now. Callback route is ready for OAuth redirect tests.</p>
+            <p className="mt-1 text-sm text-ink/70">Fast page now. More details later.</p>
           </div>
           <div className="flex gap-3">
             <a

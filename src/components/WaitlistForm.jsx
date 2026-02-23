@@ -87,7 +87,7 @@ export default function WaitlistForm() {
           Join the SubNudge waitlist
         </h2>
         <p className="mt-2 text-sm leading-6 text-ink/70">
-          Built for creators who currently manage subscriber follow-up in spreadsheets, notes, or memory.
+          For creators who want a faster monthly follow-up workflow.
         </p>
       </div>
 
@@ -182,7 +182,7 @@ export default function WaitlistForm() {
         </button>
 
         <p className="text-xs leading-5 text-ink/60">
-          v1 stores your submission locally in this browser only. We&apos;ll wire delivery to the SubNudge inbox later.
+          Local browser save only (temporary stub).
         </p>
       </form>
     </div>
