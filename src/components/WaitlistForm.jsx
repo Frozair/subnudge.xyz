@@ -83,7 +83,7 @@ export default function WaitlistForm({ compact = false }) {
     <div
       className={
         compact
-          ? 'rounded-3xl border border-line/80 bg-card/95 p-4 shadow-soft backdrop-blur sm:p-5'
+          ? 'rounded-3xl border border-ink/10 bg-white p-4 shadow-[0_18px_40px_rgba(18,26,53,0.14)] ring-1 ring-sky/10 sm:p-5'
           : 'rounded-3xl border border-line/80 bg-card/95 p-6 shadow-soft backdrop-blur sm:p-7'
       }
     >
@@ -98,9 +98,13 @@ export default function WaitlistForm({ compact = false }) {
           </p>
         </div>
       ) : (
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">Early Access</p>
-          <p className="text-xs text-ink/55">Email + Twitch</p>
+        <div className="mb-4">
+          <div className="mb-2 h-1.5 w-20 rounded-full bg-gradient-to-r from-coral to-sky" />
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">Early Access Waitlist</p>
+            <p className="text-xs text-ink/55">Email + Twitch</p>
+          </div>
+          <p className="mt-2 text-sm font-medium text-ink/80">Get first access when SubNudge opens.</p>
         </div>
       )}
 
@@ -124,7 +128,7 @@ export default function WaitlistForm({ compact = false }) {
 
       <form className={compact ? 'mt-4 space-y-3.5' : 'mt-5 space-y-4'} onSubmit={handleSubmit} noValidate>
         <div>
-          <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink">
+          <label htmlFor="email" className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}>
             Email
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
@@ -151,7 +155,10 @@ export default function WaitlistForm({ compact = false }) {
         </div>
 
         <div>
-          <label htmlFor="twitchUsername" className="mb-2 block text-sm font-medium text-ink">
+          <label
+            htmlFor="twitchUsername"
+            className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}
+          >
             Twitch username
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
@@ -181,7 +188,11 @@ export default function WaitlistForm({ compact = false }) {
         <button
           type="submit"
           disabled={Boolean(submitted) || isSubmitting}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0f1735] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+          className={
+            compact
+              ? 'inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(18,26,53,0.28)] transition hover:translate-y-[-1px] hover:bg-[#0f1735] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0'
+              : 'inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0f1735] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0'
+          }
         >
           {isSubmitting ? (
             <>
@@ -190,11 +201,12 @@ export default function WaitlistForm({ compact = false }) {
           ) : submitted ? (
             'Waitlist saved locally'
           ) : (
-            'Join the waitlist'
+            compact ? 'Protect my monthly revenue' : 'Join the waitlist'
           )}
         </button>
 
         {!compact ? <p className="text-xs leading-5 text-ink/60">Local browser save only (temporary stub).</p> : null}
+        {compact ? <p className="text-[11px] leading-4 text-ink/50">No spam automation. Personal nudges only.</p> : null}
       </form>
     </div>
   )
