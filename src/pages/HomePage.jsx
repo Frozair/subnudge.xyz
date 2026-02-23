@@ -1,28 +1,10 @@
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import WaitlistForm from '../components/WaitlistForm'
 
-const stripShots = [
-  {
-    src: '/snapshots/dashboard-screen.png',
-    alt: 'SubNudge dashboard snapshot',
-    label: 'Dashboard',
-  },
-  {
-    src: '/snapshots/supporters-states.png',
-    alt: 'SubNudge supporters snapshot',
-    label: 'Supporters',
-  },
-  {
-    src: '/snapshots/supporter-detail-states.png',
-    alt: 'SubNudge supporter detail snapshot',
-    label: 'Supporter detail',
-  },
-]
-
 export default function HomePage() {
   return (
-    <main id="top" className="relative min-h-screen overflow-x-clip pb-12">
+    <main className="relative min-h-screen overflow-x-clip pb-12">
       <div className="pointer-events-none absolute inset-x-0 top-[-16rem] mx-auto h-[34rem] w-[34rem] rounded-full bg-sky/25 blur-3xl" />
       <div className="pointer-events-none absolute right-[-10rem] top-[8rem] h-[20rem] w-[20rem] rounded-full bg-coral/20 blur-3xl" />
 
@@ -102,35 +84,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-
-              <a
-                href="#shots"
-                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-ink/70 hover:text-ink"
-              >
-                See snapshots
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="shots" className="mx-auto mt-6 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[1.7rem] border border-line/90 bg-white/80 p-4 shadow-panel backdrop-blur sm:p-5">
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">App snapshots</p>
-            <a href="#top" className="hidden text-xs text-ink/50 hover:text-ink sm:block">
-              Local stub waitlist
-            </a>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {stripShots.map((shot) => (
-              <figure key={shot.label} className="overflow-hidden rounded-2xl border border-line/80 bg-card/90">
-                <img src={shot.src} alt={shot.alt} className="h-40 w-full object-cover object-top sm:h-48" loading="lazy" />
-                <figcaption className="border-t border-line/70 px-3 py-2 text-sm font-medium text-ink">{shot.label}</figcaption>
-              </figure>
-            ))}
           </div>
         </div>
       </section>
