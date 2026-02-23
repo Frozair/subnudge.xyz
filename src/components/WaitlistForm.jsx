@@ -22,7 +22,7 @@ function formatTimestamp(value) {
   }
 }
 
-export default function WaitlistForm() {
+export default function WaitlistForm({ compact = false }) {
   const [form, setForm] = useState({ email: '', twitchUsername: '' })
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -80,16 +80,29 @@ export default function WaitlistForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-line/80 bg-card/95 p-6 shadow-soft backdrop-blur sm:p-7">
-      <div className="mb-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">Early Access</p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-[2rem]">
-          Join the SubNudge waitlist
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-ink/70">
-          For creators who want a faster monthly follow-up workflow.
-        </p>
-      </div>
+    <div
+      className={
+        compact
+          ? 'rounded-3xl border border-line/80 bg-card/95 p-4 shadow-soft backdrop-blur sm:p-5'
+          : 'rounded-3xl border border-line/80 bg-card/95 p-6 shadow-soft backdrop-blur sm:p-7'
+      }
+    >
+      {!compact ? (
+        <div className="mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">Early Access</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-[2rem]">
+            Join the SubNudge waitlist
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-ink/70">
+            For creators who want a faster monthly follow-up workflow.
+          </p>
+        </div>
+      ) : (
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">Early Access</p>
+          <p className="text-xs text-ink/55">Email + Twitch</p>
+        </div>
+      )}
 
       {submitted ? (
         <div className="rounded-2xl border border-mint/40 bg-mint/10 p-4 text-sm text-ink">
@@ -109,7 +122,7 @@ export default function WaitlistForm() {
         </div>
       ) : null}
 
-      <form className="mt-5 space-y-4" onSubmit={handleSubmit} noValidate>
+      <form className={compact ? 'mt-4 space-y-3.5' : 'mt-5 space-y-4'} onSubmit={handleSubmit} noValidate>
         <div>
           <label htmlFor="email" className="mb-2 block text-sm font-medium text-ink">
             Email
@@ -181,9 +194,7 @@ export default function WaitlistForm() {
           )}
         </button>
 
-        <p className="text-xs leading-5 text-ink/60">
-          Local browser save only (temporary stub).
-        </p>
+        {!compact ? <p className="text-xs leading-5 text-ink/60">Local browser save only (temporary stub).</p> : null}
       </form>
     </div>
   )

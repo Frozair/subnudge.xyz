@@ -1,132 +1,136 @@
-import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import WaitlistForm from '../components/WaitlistForm'
 
-const quickPoints = [
-  'Track likely expirations',
-  'Keep notes + tags per supporter',
-  'Review who needs a nudge',
-]
-
-const snapshots = [
+const stripShots = [
   {
-    title: 'Dashboard',
-    caption: 'Current app snapshot',
     src: '/snapshots/dashboard-screen.png',
     alt: 'SubNudge dashboard snapshot',
+    label: 'Dashboard',
   },
   {
-    title: 'Supporters',
-    caption: 'List and state views',
     src: '/snapshots/supporters-states.png',
-    alt: 'SubNudge supporters list snapshot',
+    alt: 'SubNudge supporters snapshot',
+    label: 'Supporters',
   },
   {
-    title: 'Supporter detail',
-    caption: 'Notes and nudge context',
     src: '/snapshots/supporter-detail-states.png',
     alt: 'SubNudge supporter detail snapshot',
+    label: 'Supporter detail',
   },
 ]
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-x-clip pb-16">
-      <div className="pointer-events-none absolute inset-x-0 top-[-18rem] mx-auto h-[34rem] w-[34rem] rounded-full bg-sky/30 blur-3xl" />
-      <div className="pointer-events-none absolute right-[-8rem] top-[26rem] h-[22rem] w-[22rem] rounded-full bg-coral/20 blur-3xl" />
+    <main id="top" className="relative min-h-screen overflow-x-clip pb-12">
+      <div className="pointer-events-none absolute inset-x-0 top-[-16rem] mx-auto h-[34rem] w-[34rem] rounded-full bg-sky/25 blur-3xl" />
+      <div className="pointer-events-none absolute right-[-10rem] top-[8rem] h-[20rem] w-[20rem] rounded-full bg-coral/20 blur-3xl" />
 
-      <section className="mx-auto grid w-full max-w-6xl gap-10 px-4 pb-10 pt-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-12 lg:px-8 lg:pt-14">
-        <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink/70 backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden="true" />
-            Mobile-first creator CRM for Twitch
-          </p>
-
-          <h1 className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-5xl lg:text-[3.35rem]">
-            Stop tracking Twitch subs in spreadsheets.
-          </h1>
-
-          <p className="mt-5 max-w-xl text-base leading-7 text-ink/75 sm:text-lg">
-            SubNudge gives you a cleaner way to review subscriber changes and send personal follow-ups.
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href="#waitlist"
-              className="inline-flex items-center gap-2 rounded-2xl bg-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0f1735]"
-            >
-              Join waitlist
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
+      <section className="mx-auto w-full max-w-6xl px-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
+        <div className="rounded-[2rem] border border-line/90 bg-white/80 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-line bg-card/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">
+              <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden="true" />
+              SubNudge
+            </div>
             <Link
               to="/twitch/callback?code=test123&state=local-dev"
-              className="inline-flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-2.5 text-sm font-medium text-ink transition hover:border-sky/50 hover:bg-sky/5"
+              className="text-xs font-medium text-ink/70 underline decoration-line underline-offset-4 hover:text-ink"
             >
               Test callback route
             </Link>
           </div>
 
-          <ul className="mt-7 grid max-w-xl gap-3 sm:grid-cols-2">
-            {quickPoints.map((item) => (
-              <li key={item} className="flex items-center gap-2 rounded-2xl border border-line/90 bg-white/70 px-3 py-3 text-sm text-ink/85 shadow-panel backdrop-blur">
-                <CheckCircle2 className="h-4 w-4 text-mint" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+            <div>
+              <h1 className="text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-5xl lg:text-[3.25rem]">
+                Stop doing monthly sub checks in spreadsheets.
+              </h1>
+              <p className="mt-4 max-w-md text-base leading-7 text-ink/70 sm:text-lg">
+                A simple creator CRM for tracking changes, keeping supporter context, and sending personal nudges.
+              </p>
 
-        <div id="waitlist" className="lg:sticky lg:top-8">
-          <WaitlistForm />
+              <div className="mt-6 max-w-md">
+                <WaitlistForm compact />
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-ink/65">
+                <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">Mobile-first</span>
+                <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">Twitch creators</span>
+                <span className="rounded-full border border-line bg-white/70 px-3 py-1.5">Manual follow-ups</span>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="rounded-[1.7rem] border border-line/90 bg-[#0e1634] p-3 shadow-soft sm:p-4">
+                <div className="mb-3 flex items-center gap-2 px-1">
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/35" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+                  <span className="ml-2 text-[11px] font-medium uppercase tracking-[0.18em] text-white/70">SubNudge preview</span>
+                </div>
+
+                <div className="relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/5 p-3 sm:p-4">
+                  <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.18)_1px,transparent_0)] [background-size:14px_14px]" />
+                  <div className="relative rounded-2xl border border-line/50 bg-card/95 p-2 shadow-panel">
+                    <img
+                      src="/snapshots/dashboard-screen.png"
+                      alt="SubNudge dashboard snapshot"
+                      className="h-[18rem] w-full rounded-xl object-cover object-top sm:h-[22rem] lg:h-[24rem]"
+                    />
+                  </div>
+
+                  <div className="relative mt-3 grid grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-white/90 p-2 shadow-panel">
+                      <img
+                        src="/snapshots/supporters-states.png"
+                        alt="Supporters states snapshot"
+                        className="h-28 w-full rounded-xl object-cover object-top sm:h-32"
+                        loading="lazy"
+                      />
+                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink/55">Supporters</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/90 p-2 shadow-panel">
+                      <img
+                        src="/snapshots/supporter-detail-states.png"
+                        alt="Supporter detail snapshot"
+                        className="h-28 w-full rounded-xl object-cover object-top sm:h-32"
+                        loading="lazy"
+                      />
+                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink/55">Detail + notes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="#shots"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-ink/70 hover:text-ink"
+              >
+                See snapshots
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto mt-4 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-line bg-white/85 p-5 shadow-soft backdrop-blur sm:p-6">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">Snapshots</p>
-              <h2 className="mt-2 text-xl font-semibold tracking-tight text-ink sm:text-2xl">What the app already looks like</h2>
-            </div>
-            <p className="text-sm text-ink/65">Current internal snapshot images from the mobile app build.</p>
+      <section id="shots" className="mx-auto mt-6 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-[1.7rem] border border-line/90 bg-white/80 p-4 shadow-panel backdrop-blur sm:p-5">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">App snapshots</p>
+            <a href="#top" className="hidden text-xs text-ink/50 hover:text-ink sm:block">
+              Local stub waitlist
+            </a>
           </div>
 
-          <div className="mt-5 grid gap-4 lg:grid-cols-3">
-            {snapshots.map((item) => (
-              <figure key={item.title} className="overflow-hidden rounded-2xl border border-line/80 bg-card/80">
-                <img src={item.src} alt={item.alt} className="h-48 w-full object-cover object-top sm:h-56 lg:h-44" loading="lazy" />
-                <figcaption className="flex items-center justify-between gap-2 border-t border-line/70 px-3 py-2.5">
-                  <span className="text-sm font-semibold text-ink">{item.title}</span>
-                  <span className="text-xs text-ink/60">{item.caption}</span>
-                </figcaption>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {stripShots.map((shot) => (
+              <figure key={shot.label} className="overflow-hidden rounded-2xl border border-line/80 bg-card/90">
+                <img src={shot.src} alt={shot.alt} className="h-40 w-full object-cover object-top sm:h-48" loading="lazy" />
+                <figcaption className="border-t border-line/70 px-3 py-2 text-sm font-medium text-ink">{shot.label}</figcaption>
               </figure>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto mt-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-4 rounded-3xl border border-line bg-white/80 p-6 shadow-panel backdrop-blur sm:flex-row sm:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Next step</p>
-            <p className="mt-2 text-xl font-semibold tracking-tight text-ink">
-              Join the waitlist for early access.
-            </p>
-            <p className="mt-1 text-sm text-ink/70">Fast page now. More details later.</p>
-          </div>
-          <div className="flex gap-3">
-            <a
-              href="#waitlist"
-              className="inline-flex items-center rounded-2xl bg-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#0f1735]"
-            >
-              Join waitlist
-            </a>
-            <Link
-              to="/twitch/callback"
-              className="inline-flex items-center rounded-2xl border border-line bg-white px-4 py-2.5 text-sm font-medium text-ink transition hover:bg-sky/5"
-            >
-              Open callback page
-            </Link>
           </div>
         </div>
       </section>
