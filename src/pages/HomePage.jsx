@@ -46,32 +46,15 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-[1.8rem] border border-line/70 bg-white/60 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.10)] backdrop-blur sm:p-5">
-                <div className="pointer-events-none absolute inset-x-8 top-8 h-20 rounded-full bg-sky/10 blur-2xl" />
-                <div className="pointer-events-none absolute -right-4 bottom-8 h-24 w-24 rounded-full bg-coral/10 blur-2xl" />
+              <div className="relative rounded-[1.8rem] border border-line/60 bg-white/45 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.08)] backdrop-blur sm:p-5">
+                <div className="pointer-events-none absolute inset-x-10 top-10 h-16 rounded-full bg-sky/8 blur-2xl" />
 
-                <div className="relative mx-auto w-[18.25rem] sm:w-[19.75rem] lg:w-[20.75rem]">
-                  <div className="pointer-events-none absolute inset-x-5 bottom-2 top-8 rounded-[3.2rem] bg-black/40 blur-2xl" />
-                  <div className="pointer-events-none absolute inset-x-10 bottom-0 h-6 rounded-full bg-black/25 blur-xl" />
-
-                  <div className="relative">
-                    <div className="absolute left-[3.85%] top-[1.53%] h-[96.94%] w-[92.24%] overflow-hidden rounded-[8.5%] bg-[#dfe3de] shadow-inner">
-                      <div className="relative h-full w-full overflow-hidden bg-[#dfe3de]">
-                        <img
-                          src="/snapshots/dashboard-post-sync.png"
-                          alt="SubNudge mobile dashboard preview with bottom navigation"
-                          className="absolute bottom-0 left-1/2 w-[145%] max-w-none -translate-x-1/2"
-                        />
-                      </div>
-                    </div>
-
-                    <img
-                      src="/device-shells/iphone16-pro-max-shell.png"
-                      alt=""
-                      aria-hidden="true"
-                      className="relative z-10 block w-full drop-shadow-[0_20px_32px_rgba(0,0,0,0.18)]"
-                    />
-                  </div>
+                <div className="relative mx-auto w-[17.75rem] sm:w-[19rem] lg:w-[20rem]">
+                  <img
+                    src="/device-shells/subnudge-phone-floating.png"
+                    alt="SubNudge mobile app preview on a floating iPhone"
+                    className="relative z-10 block w-full drop-shadow-[0_28px_42px_rgba(18,26,53,0.12)]"
+                  />
                 </div>
               </div>
             </div>
