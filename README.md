@@ -1,13 +1,13 @@
 # subnudge.xyz
 
-SubNudge waiting-list site and Twitch OAuth callback debug page.
+SubNudge waiting-list site and Twitch OAuth callback handoff page.
 
 ## Purpose
 
 This is a standalone Vite + React site for:
 
 - the public waitlist landing page (`/`)
-- a local/testable Twitch OAuth callback debug route (`/twitch/callback`)
+- a Twitch OAuth callback route (`/twitch/callback`) that hands off to the native app
 
 The main product app lives in a separate repo at `/Users/Frozair/dev/subnudge`.
 
@@ -43,7 +43,7 @@ npm run preview
 
 ## Callback Route Testing
 
-Examples:
+Examples (these will attempt to deep-link into the SubNudge app while preserving params):
 
 - `http://localhost:3505/twitch/callback?code=test123&state=abc`
 - `http://localhost:3505/twitch/callback?error=access_denied&error_description=User%20cancelled`
