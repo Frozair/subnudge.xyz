@@ -55,30 +55,32 @@ export default function HomePage() {
                   <p className="text-[11px] font-medium text-white/45">Creator workflow</p>
                 </div>
 
-                <div className="relative mx-auto w-[18.5rem] sm:w-[20rem] lg:w-[21rem]">
-                  <div className="pointer-events-none absolute inset-0 translate-y-5 scale-95 rounded-[2.5rem] bg-black/45 blur-2xl" />
-                  <div className="pointer-events-none absolute -left-1 top-24 h-12 w-1 rounded-full bg-white/20" />
-                  <div className="pointer-events-none absolute -right-1 top-20 h-16 w-1 rounded-full bg-white/18" />
-                  <div className="pointer-events-none absolute -right-1 top-40 h-10 w-1 rounded-full bg-white/14" />
+                <div className="relative mx-auto w-[17.75rem] sm:w-[19.25rem] lg:w-[20.25rem]">
+                  <div className="pointer-events-none absolute inset-x-4 bottom-2 top-6 rounded-[3rem] bg-black/45 blur-2xl" />
+                  <div className="pointer-events-none absolute inset-x-8 bottom-[-0.35rem] h-6 rounded-full bg-black/35 blur-xl" />
 
-                  <div className="relative rounded-[2.2rem] border border-white/20 bg-[#08090d] p-2.5 shadow-[0_28px_60px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.1)]">
-                    <div className="pointer-events-none absolute inset-x-10 top-2.5 z-20 h-6 rounded-full border border-white/10 bg-black/80 shadow-inner" />
-
-                    <div className="relative overflow-hidden rounded-[1.7rem] border border-white/5 bg-[#dfe3de]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/5" />
+                  <div className="relative">
+                    <div className="absolute left-[3.85%] top-[1.53%] h-[96.94%] w-[92.24%] overflow-hidden rounded-[8.5%] bg-[#dfe3de] shadow-inner">
                       <img
-                        src="/snapshots/supporters-states.png"
-                        alt="SubNudge supporters mobile screen with bottom navigation"
-                        className="relative block w-full origin-bottom scale-[1.03]"
+                        src="/snapshots/dashboard-screen.png"
+                        alt="SubNudge mobile dashboard preview with bottom navigation"
+                        className="h-full w-full origin-bottom scale-[1.06] object-cover object-center"
                       />
                     </div>
+
+                    <img
+                      src="/device-shells/iphone16-pro-max-shell.png"
+                      alt=""
+                      aria-hidden="true"
+                      className="relative z-10 block w-full drop-shadow-[0_20px_32px_rgba(0,0,0,0.18)]"
+                    />
                   </div>
 
                   <div className="absolute -left-4 top-12 rotate-[-6deg] rounded-xl border border-coral/35 bg-coral/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
                     No spreadsheet night
                   </div>
-                  <div className="absolute -right-3 bottom-20 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
-                    Bottom nav + filters
+                  <div className="absolute -right-3 bottom-24 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
+                    Mobile-first workflow
                   </div>
                 </div>
 
