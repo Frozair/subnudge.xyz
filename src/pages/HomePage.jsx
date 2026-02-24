@@ -1,5 +1,4 @@
 import { Sparkles } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import WaitlistForm from '../components/WaitlistForm'
 
 export default function HomePage() {
@@ -11,20 +10,14 @@ export default function HomePage() {
 
       <section className="mx-auto w-full max-w-6xl px-4 pt-6 sm:px-6 lg:px-8 lg:pt-10">
         <div className="rounded-[2rem] border border-line/80 bg-white/82 p-4 shadow-soft backdrop-blur sm:p-6 lg:p-8">
-          <div className="mb-5 flex items-center justify-between gap-3">
+          <div className="mb-5 flex items-center gap-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-line bg-card/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">
               <Sparkles className="h-3.5 w-3.5 text-coral" aria-hidden="true" />
               Twitch creator revenue guard
             </div>
-            <Link
-              to="/twitch/callback?code=test123&state=local-dev"
-              className="text-xs font-medium text-ink/55 underline decoration-line underline-offset-4 hover:text-ink"
-            >
-              Test callback route
-            </Link>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
             <div>
               <h1 className="text-4xl font-semibold leading-tight tracking-tight text-ink sm:text-5xl lg:text-[3.15rem]">
                 Prime subs expire quietly.
@@ -45,15 +38,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="relative overflow-hidden rounded-[1.8rem] border border-line/60 bg-white/40 p-3 shadow-[0_24px_60px_rgba(18,26,53,0.08)] backdrop-blur sm:p-4">
-                <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] ring-1 ring-white/40" />
-                <img
-                  src="/device-shells/app-preview-final.png"
-                  alt="SubNudge mobile app preview"
-                  className="block w-full rounded-[1.2rem] shadow-[0_26px_50px_rgba(18,26,53,0.18)]"
-                />
-              </div>
+            <div className="relative lg:pt-3">
+              <img
+                src="/device-shells/subnudge_phone_transparent.png"
+                alt="SubNudge mobile app preview"
+                className="mx-auto block h-auto max-h-[31rem] w-full max-w-[20rem] sm:max-h-[35rem] sm:max-w-[23rem] lg:max-h-[39rem] lg:max-w-[25rem]"
+              />
             </div>
           </div>
         </div>
