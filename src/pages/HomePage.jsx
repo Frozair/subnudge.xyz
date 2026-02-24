@@ -49,7 +49,7 @@ export default function HomePage() {
               <div className="relative overflow-hidden rounded-[1.8rem] border border-line/60 bg-white/40 p-3 shadow-[0_24px_60px_rgba(18,26,53,0.08)] backdrop-blur sm:p-4">
                 <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] ring-1 ring-white/40" />
                 <img
-                  src="/device-shells/subnudge-hero-preview.png"
+                  src="/device-shells/app-preview-final.png"
                   alt="SubNudge mobile app preview"
                   className="block w-full rounded-[1.2rem] shadow-[0_26px_50px_rgba(18,26,53,0.18)]"
                 />
