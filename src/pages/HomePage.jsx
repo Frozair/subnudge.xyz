@@ -46,13 +46,13 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-[1.8rem] border border-white/10 bg-gradient-to-b from-[#0b1230] to-[#080c1f] p-4 shadow-[0_30px_80px_rgba(11,18,48,0.34)] sm:p-5">
-                <div className="pointer-events-none absolute inset-x-8 top-8 h-20 rounded-full bg-sky/20 blur-2xl" />
-                <div className="pointer-events-none absolute -right-4 bottom-8 h-24 w-24 rounded-full bg-coral/20 blur-2xl" />
+              <div className="relative rounded-[1.8rem] border border-line/70 bg-white/65 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.12)] backdrop-blur sm:p-5">
+                <div className="pointer-events-none absolute inset-x-8 top-8 h-20 rounded-full bg-sky/10 blur-2xl" />
+                <div className="pointer-events-none absolute -right-4 bottom-8 h-24 w-24 rounded-full bg-coral/10 blur-2xl" />
 
                 <div className="relative mb-4 flex items-center justify-between gap-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/65">Mobile preview</p>
-                  <p className="text-[11px] font-medium text-white/45">Creator workflow</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/55">Mobile preview</p>
+                  <p className="text-[11px] font-medium text-ink/40">Creator workflow</p>
                 </div>
 
                 <div className="relative mx-auto w-[17.75rem] sm:w-[19.25rem] lg:w-[20.25rem]">
@@ -76,22 +76,22 @@ export default function HomePage() {
                     />
                   </div>
 
-                  <div className="absolute -left-4 top-12 rotate-[-6deg] rounded-xl border border-coral/35 bg-coral/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
+                  <div className="absolute -left-4 top-12 rotate-[-6deg] rounded-xl border border-coral/35 bg-coral/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink shadow-panel">
                     No spreadsheet night
                   </div>
-                  <div className="absolute -right-3 bottom-24 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
+                  <div className="absolute -right-3 bottom-24 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink shadow-panel">
                     Mobile-first workflow
                   </div>
                 </div>
 
                 <div className="relative mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">Reads as mobile</p>
-                    <p className="mt-1 text-xs font-medium leading-5 text-white/85">Phone frame + thumb-friendly nav</p>
+                  <div className="rounded-2xl border border-line/60 bg-white/70 px-3 py-2.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/50">Reads as mobile</p>
+                    <p className="mt-1 text-xs font-medium leading-5 text-ink/85">Phone frame + thumb-friendly nav</p>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">Revenue workflow</p>
-                    <p className="mt-1 text-xs font-medium leading-5 text-white/85">Needs / Soon / Active supporter views</p>
+                  <div className="rounded-2xl border border-line/60 bg-white/70 px-3 py-2.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/50">Revenue workflow</p>
+                    <p className="mt-1 text-xs font-medium leading-5 text-ink/85">Needs / Soon / Active supporter views</p>
                   </div>
                 </div>
               </div>
