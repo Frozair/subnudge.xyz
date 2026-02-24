@@ -46,46 +46,50 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="rounded-[1.7rem] border border-white/10 bg-[#0b1230] p-3 shadow-[0_30px_70px_rgba(11,18,48,0.32)] sm:p-4">
-                <div className="mb-3 flex items-center gap-2 px-1">
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/35" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-                  <span className="ml-2 text-[11px] font-medium uppercase tracking-[0.18em] text-white/70">SubNudge preview</span>
+              <div className="relative rounded-[1.8rem] border border-white/10 bg-gradient-to-b from-[#0b1230] to-[#080c1f] p-4 shadow-[0_30px_80px_rgba(11,18,48,0.34)] sm:p-5">
+                <div className="pointer-events-none absolute inset-x-8 top-8 h-20 rounded-full bg-sky/20 blur-2xl" />
+                <div className="pointer-events-none absolute -right-4 bottom-8 h-24 w-24 rounded-full bg-coral/20 blur-2xl" />
+
+                <div className="relative mb-4 flex items-center justify-between gap-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/65">Mobile preview</p>
+                  <p className="text-[11px] font-medium text-white/45">Creator workflow</p>
                 </div>
 
-                <div className="relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/5 p-3 sm:p-4">
-                  <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.18)_1px,transparent_0)] [background-size:14px_14px]" />
-                  <div className="absolute right-4 top-4 rotate-[-4deg] rounded-xl border border-coral/40 bg-coral/15 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-panel">
-                    No spreadsheet night
-                  </div>
-                  <div className="relative rounded-2xl border border-line/50 bg-card/95 p-2 shadow-panel">
-                    <img
-                      src="/snapshots/dashboard-screen.png"
-                      alt="SubNudge dashboard snapshot"
-                      className="h-[18rem] w-full rounded-xl object-cover object-top sm:h-[22rem] lg:h-[24rem]"
-                    />
-                  </div>
+                <div className="relative mx-auto w-[18.5rem] sm:w-[20rem] lg:w-[21rem]">
+                  <div className="pointer-events-none absolute inset-0 translate-y-5 scale-95 rounded-[2.5rem] bg-black/45 blur-2xl" />
+                  <div className="pointer-events-none absolute -left-1 top-24 h-12 w-1 rounded-full bg-white/20" />
+                  <div className="pointer-events-none absolute -right-1 top-20 h-16 w-1 rounded-full bg-white/18" />
+                  <div className="pointer-events-none absolute -right-1 top-40 h-10 w-1 rounded-full bg-white/14" />
 
-                  <div className="relative mt-3 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-white/10 bg-white/90 p-2 shadow-panel">
+                  <div className="relative rounded-[2.2rem] border border-white/20 bg-[#08090d] p-2.5 shadow-[0_28px_60px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.1)]">
+                    <div className="pointer-events-none absolute inset-x-10 top-2.5 z-20 h-6 rounded-full border border-white/10 bg-black/80 shadow-inner" />
+
+                    <div className="relative overflow-hidden rounded-[1.7rem] border border-white/5 bg-[#dfe3de]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/5" />
                       <img
                         src="/snapshots/supporters-states.png"
-                        alt="Supporters states snapshot"
-                        className="h-28 w-full rounded-xl object-cover object-top sm:h-32"
-                        loading="lazy"
+                        alt="SubNudge supporters mobile screen with bottom navigation"
+                        className="relative block w-full origin-bottom scale-[1.03]"
                       />
-                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink/55">Who needs attention</p>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/90 p-2 shadow-panel">
-                      <img
-                        src="/snapshots/supporter-detail-states.png"
-                        alt="Supporter detail snapshot"
-                        className="h-28 w-full rounded-xl object-cover object-top sm:h-32"
-                        loading="lazy"
-                      />
-                      <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink/55">Notes + follow-up context</p>
-                    </div>
+                  </div>
+
+                  <div className="absolute -left-4 top-12 rotate-[-6deg] rounded-xl border border-coral/35 bg-coral/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
+                    No spreadsheet night
+                  </div>
+                  <div className="absolute -right-3 bottom-20 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/15 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-panel">
+                    Bottom nav + filters
+                  </div>
+                </div>
+
+                <div className="relative mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">Reads as mobile</p>
+                    <p className="mt-1 text-xs font-medium leading-5 text-white/85">Phone frame + thumb-friendly nav</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">Revenue workflow</p>
+                    <p className="mt-1 text-xs font-medium leading-5 text-white/85">Needs / Soon / Active supporter views</p>
                   </div>
                 </div>
               </div>
