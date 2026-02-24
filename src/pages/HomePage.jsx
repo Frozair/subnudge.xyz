@@ -46,16 +46,13 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-[1.8rem] border border-line/60 bg-white/45 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.08)] backdrop-blur sm:p-5">
-                <div className="pointer-events-none absolute inset-x-10 top-10 h-16 rounded-full bg-sky/8 blur-2xl" />
-
-                <div className="relative mx-auto w-[17.75rem] sm:w-[19rem] lg:w-[20rem]">
-                  <img
-                    src="/device-shells/subnudge-phone-floating.png"
-                    alt="SubNudge mobile app preview on a floating iPhone"
-                    className="relative z-10 block w-full drop-shadow-[0_28px_42px_rgba(18,26,53,0.12)]"
-                  />
-                </div>
+              <div className="relative overflow-hidden rounded-[1.8rem] border border-line/60 bg-white/40 p-3 shadow-[0_24px_60px_rgba(18,26,53,0.08)] backdrop-blur sm:p-4">
+                <div className="pointer-events-none absolute inset-0 rounded-[1.8rem] ring-1 ring-white/40" />
+                <img
+                  src="/device-shells/subnudge-hero-preview.png"
+                  alt="SubNudge mobile app preview"
+                  className="block w-full rounded-[1.2rem] shadow-[0_26px_50px_rgba(18,26,53,0.18)]"
+                />
               </div>
             </div>
           </div>
