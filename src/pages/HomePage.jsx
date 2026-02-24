@@ -46,26 +46,23 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-[1.8rem] border border-line/70 bg-white/65 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.12)] backdrop-blur sm:p-5">
+              <div className="relative rounded-[1.8rem] border border-line/70 bg-white/60 p-4 shadow-[0_24px_60px_rgba(18,26,53,0.10)] backdrop-blur sm:p-5">
                 <div className="pointer-events-none absolute inset-x-8 top-8 h-20 rounded-full bg-sky/10 blur-2xl" />
                 <div className="pointer-events-none absolute -right-4 bottom-8 h-24 w-24 rounded-full bg-coral/10 blur-2xl" />
 
-                <div className="relative mb-4 flex items-center justify-between gap-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/55">Mobile preview</p>
-                  <p className="text-[11px] font-medium text-ink/40">Creator workflow</p>
-                </div>
-
-                <div className="relative mx-auto w-[17.75rem] sm:w-[19.25rem] lg:w-[20.25rem]">
-                  <div className="pointer-events-none absolute inset-x-4 bottom-2 top-6 rounded-[3rem] bg-black/45 blur-2xl" />
-                  <div className="pointer-events-none absolute inset-x-8 bottom-[-0.35rem] h-6 rounded-full bg-black/35 blur-xl" />
+                <div className="relative mx-auto w-[18.25rem] sm:w-[19.75rem] lg:w-[20.75rem]">
+                  <div className="pointer-events-none absolute inset-x-5 bottom-2 top-8 rounded-[3.2rem] bg-black/40 blur-2xl" />
+                  <div className="pointer-events-none absolute inset-x-10 bottom-0 h-6 rounded-full bg-black/25 blur-xl" />
 
                   <div className="relative">
                     <div className="absolute left-[3.85%] top-[1.53%] h-[96.94%] w-[92.24%] overflow-hidden rounded-[8.5%] bg-[#dfe3de] shadow-inner">
-                      <img
-                        src="/snapshots/dashboard-screen.png"
-                        alt="SubNudge mobile dashboard preview with bottom navigation"
-                        className="h-full w-full origin-bottom scale-[1.06] object-cover object-center"
-                      />
+                      <div className="relative h-full w-full overflow-hidden bg-[#dfe3de]">
+                        <img
+                          src="/snapshots/dashboard-post-sync.png"
+                          alt="SubNudge mobile dashboard preview with bottom navigation"
+                          className="absolute bottom-0 left-1/2 w-[145%] max-w-none -translate-x-1/2"
+                        />
+                      </div>
                     </div>
 
                     <img
@@ -74,24 +71,6 @@ export default function HomePage() {
                       aria-hidden="true"
                       className="relative z-10 block w-full drop-shadow-[0_20px_32px_rgba(0,0,0,0.18)]"
                     />
-                  </div>
-
-                  <div className="absolute -left-4 top-12 rotate-[-6deg] rounded-xl border border-coral/35 bg-coral/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink shadow-panel">
-                    No spreadsheet night
-                  </div>
-                  <div className="absolute -right-3 bottom-24 rotate-[4deg] rounded-xl border border-sky/35 bg-sky/12 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-ink shadow-panel">
-                    Mobile-first workflow
-                  </div>
-                </div>
-
-                <div className="relative mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-line/60 bg-white/70 px-3 py-2.5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/50">Reads as mobile</p>
-                    <p className="mt-1 text-xs font-medium leading-5 text-ink/85">Phone frame + thumb-friendly nav</p>
-                  </div>
-                  <div className="rounded-2xl border border-line/60 bg-white/70 px-3 py-2.5">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/50">Revenue workflow</p>
-                    <p className="mt-1 text-xs font-medium leading-5 text-ink/85">Needs / Soon / Active supporter views</p>
                   </div>
                 </div>
               </div>
