@@ -4,7 +4,14 @@
   "version": "0.1.0",
   "type": "module",
   "description": "SubNudge waiting list site and Twitch OAuth callback debug page",
-  "keywords": ["twitch", "creator", "crm", "waitlist", "vite", "react"],
+  "keywords": [
+    "twitch",
+    "creator",
+    "crm",
+    "waitlist",
+    "vite",
+    "react"
+  ],
   "author": "Frozair",
   "license": "MIT",
   "scripts": {
@@ -17,7 +24,8 @@
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.13.1",
+    "vercel": "^50.22.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
