@@ -35,15 +35,15 @@ function buildWaitlistEmail(submission) {
   ].join('\n')
 }
 
-export default async function handler(request) {
-  if (request.method !== 'POST') {
-    return jsonResponse(
-      { ok: false, message: 'Method not allowed.' },
-      405,
-      { Allow: 'POST' },
-    )
-  }
+export function GET() {
+  return jsonResponse(
+    { ok: false, message: 'Method not allowed.' },
+    405,
+    { Allow: 'POST' },
+  )
+}
 
+export async function POST(request) {
   let payload
 
   try {
