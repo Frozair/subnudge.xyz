@@ -3,15 +3,79 @@ import { CheckCircle2, LoaderCircle, Mail, Tv2 } from 'lucide-react'
 import { getStoredWaitlistSubmission, saveWaitlistSubmission } from '../lib/storage'
 import { validateWaitlistPayload } from '../lib/validation'
 
-function submitWaitlistStub(payload) {
+const LOCAL_WAITLIST_SOURCE = 'subnudge.xyz-waitlist-local'
+
+function canUseLocalWaitlistFallback() {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  return window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+}
+
+function saveWaitlistSubmissionLocally(payload) {
   const record = {
     ...payload,
     submittedAt: new Date().toISOString(),
-    source: 'subnudge.xyz-waitlist',
+    source: LOCAL_WAITLIST_SOURCE,
     version: 1,
   }
 
   return saveWaitlistSubmission(record)
+}
+
+function isLocalOnlySubmission(record) {
+  if (!record || typeof record !== 'object') {
+    return false
+  }
+
+  return record.source === LOCAL_WAITLIST_SOURCE || record.version === 1
+}
+
+async function submitWaitlist(payload) {
+  const allowLocalFallback = canUseLocalWaitlistFallback()
+
+  try {
+    const response = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    const body = await response.json().catch(() => null)
+
+    if (!response.ok) {
+      if (allowLocalFallback && response.status === 404) {
+        return saveWaitlistSubmissionLocally(payload)
+      }
+
+      const error = new Error(
+        typeof body?.message === 'string'
+          ? body.message
+          : 'We could not save your waitlist spot. Please try again.',
+      )
+
+      if (body?.errors && typeof body.errors === 'object') {
+        error.fieldErrors = body.errors
+      }
+
+      throw error
+    }
+
+    if (!body?.submission || typeof body.submission !== 'object') {
+      throw new Error('We could not confirm your waitlist spot. Please try again.')
+    }
+
+    return saveWaitlistSubmission(body.submission)
+  } catch (error) {
+    if (allowLocalFallback && error instanceof TypeError) {
+      return saveWaitlistSubmissionLocally(payload)
+    }
+
+    throw error
+  }
 }
 
 function formatTimestamp(value) {
@@ -27,6 +91,7 @@ export default function WaitlistForm({ compact = false }) {
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(null)
+  const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
     const existing = getStoredWaitlistSubmission()
@@ -42,6 +107,7 @@ export default function WaitlistForm({ compact = false }) {
   function handleChange(event) {
     const { name, value } = event.target
     setForm((current) => ({ ...current, [name]: value }))
+    setSubmitError('')
     setErrors((current) => {
       if (!current[name]) {
         return current
@@ -66,18 +132,31 @@ export default function WaitlistForm({ compact = false }) {
 
     setIsSubmitting(true)
     setErrors({})
+    setSubmitError('')
 
     try {
-      const record = submitWaitlistStub(result.normalized)
+      const record = await submitWaitlist(result.normalized)
       setSubmitted(record)
       setForm({
         email: record.email,
         twitchUsername: record.twitchUsername,
       })
+    } catch (error) {
+      if (error?.fieldErrors && typeof error.fieldErrors === 'object') {
+        setErrors(error.fieldErrors)
+      }
+
+      setSubmitError(
+        typeof error?.message === 'string'
+          ? error.message
+          : 'We could not save your waitlist spot. Please try again.',
+      )
     } finally {
       setIsSubmitting(false)
     }
   }
+
+  const localOnlySubmission = isLocalOnlySubmission(submitted)
 
   return (
     <div
@@ -115,7 +194,8 @@ export default function WaitlistForm({ compact = false }) {
             <div>
               <p className="font-semibold">You&apos;re on the list.</p>
               <p className="mt-1 text-ink/75">
-                Saved locally for now as <span className="font-medium text-ink">{submitted.email}</span> (Twitch:{' '}
+                {localOnlySubmission ? 'Saved locally in this browser as ' : 'Sent to the SubNudge waitlist inbox as '}
+                <span className="font-medium text-ink">{submitted.email}</span> (Twitch:{' '}
                 <span className="font-medium text-ink">@{submitted.twitchUsername}</span>).
               </p>
               <p className="mt-1 text-xs text-ink/60">
@@ -185,6 +265,12 @@ export default function WaitlistForm({ compact = false }) {
           ) : null}
         </div>
 
+        {submitError ? (
+          <p className="rounded-2xl border border-coral/30 bg-coral/10 px-3 py-2 text-xs text-coral">
+            {submitError}
+          </p>
+        ) : null}
+
         <button
           type="submit"
           disabled={Boolean(submitted) || isSubmitting}
@@ -199,14 +285,22 @@ export default function WaitlistForm({ compact = false }) {
               <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> Saving...
             </>
           ) : submitted ? (
-            'Waitlist saved locally'
+            localOnlySubmission ? 'Saved locally for localhost' : "You're on the waitlist"
           ) : (
             compact ? 'Protect my monthly revenue' : 'Join the waitlist'
           )}
         </button>
 
-        {!compact ? <p className="text-xs leading-5 text-ink/60">Local browser save only (temporary stub).</p> : null}
-        {compact ? <p className="text-[11px] leading-4 text-ink/50">No spam automation. Personal nudges only.</p> : null}
+        {!compact ? (
+          <p className="text-xs leading-5 text-ink/60">
+            Delivered to the waitlist inbox on Vercel. On localhost without the API, it falls back to a browser save.
+          </p>
+        ) : null}
+        {compact ? (
+          <p className="text-[11px] leading-4 text-ink/50">
+            Hosted on Vercel. Localhost falls back to an in-browser save.
+          </p>
+        ) : null}
       </form>
     </div>
   )

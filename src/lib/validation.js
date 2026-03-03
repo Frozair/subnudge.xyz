@@ -4,7 +4,7 @@ export function normalizeTwitchUsername(value) {
   return value.trim().replace(/^@+/, '').replace(/\s+/g, '')
 }
 
-export function validateWaitlistPayload({ email, twitchUsername }) {
+export function validateWaitlistPayload({ email = '', twitchUsername = '' } = {}) {
   const normalizedEmail = email.trim().toLowerCase()
   const normalizedTwitchUsername = normalizeTwitchUsername(twitchUsername)
   const errors = {}
