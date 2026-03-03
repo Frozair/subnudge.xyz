@@ -4,16 +4,6 @@ const WAITLIST_SOURCE = 'subnudge.xyz-waitlist'
 const WAITLIST_VERSION = 2
 const DEFAULT_TO_EMAIL = 'subnudge@frozair.xyz'
 
-function jsonResponse(body, status = 200, headers = {}) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      ...headers,
-    },
-  })
-}
-
 function buildSubmission(payload) {
   return {
     ...payload,
@@ -35,33 +25,39 @@ function buildWaitlistEmail(submission) {
   ].join('\n')
 }
 
-export function GET() {
-  return jsonResponse(
-    { ok: false, message: 'Method not allowed.' },
-    405,
-    { Allow: 'POST' },
-  )
+function readJsonBody(request) {
+  if (typeof request.body === 'string') {
+    return JSON.parse(request.body)
+  }
+
+  if (!request.body || typeof request.body !== 'object' || Array.isArray(request.body)) {
+    throw new Error('Invalid JSON payload.')
+  }
+
+  return request.body
 }
 
-export async function POST(request) {
+export default async function handler(request, response) {
+  if (request.method !== 'POST') {
+    response.setHeader('Allow', 'POST')
+    return response.status(405).json({ ok: false, message: 'Method not allowed.' })
+  }
+
   let payload
 
   try {
-    payload = await request.json()
+    payload = readJsonBody(request)
   } catch {
-    return jsonResponse({ ok: false, message: 'Invalid JSON payload.' }, 400)
+    return response.status(400).json({ ok: false, message: 'Invalid JSON payload.' })
   }
 
   const result = validateWaitlistPayload(payload)
   if (!result.isValid) {
-    return jsonResponse(
-      {
-        ok: false,
-        errors: result.errors,
-        message: 'Please correct the highlighted fields.',
-      },
-      400,
-    )
+    return response.status(400).json({
+      ok: false,
+      errors: result.errors,
+      message: 'Please correct the highlighted fields.',
+    })
   }
 
   const resendApiKey = process.env.RESEND_API_KEY
@@ -70,13 +66,10 @@ export async function POST(request) {
 
   if (!resendApiKey || !fromEmail) {
     console.error('Waitlist delivery is not configured. Missing RESEND_API_KEY or WAITLIST_FROM_EMAIL.')
-    return jsonResponse(
-      {
-        ok: false,
-        message: 'Waitlist delivery is not configured yet.',
-      },
-      503,
-    )
+    return response.status(503).json({
+      ok: false,
+      message: 'Waitlist delivery is not configured yet.',
+    })
   }
 
   const submission = buildSubmission(result.normalized)
@@ -97,18 +90,15 @@ export async function POST(request) {
   if (!resendResponse.ok) {
     const errorDetails = await resendResponse.text().catch(() => '')
     console.error('Waitlist email delivery failed.', resendResponse.status, errorDetails)
-    return jsonResponse(
-      {
-        ok: false,
-        message: 'We could not save your waitlist spot. Please try again in a moment.',
-      },
-      502,
-    )
+    return response.status(502).json({
+      ok: false,
+      message: 'We could not save your waitlist spot. Please try again in a moment.',
+    })
   }
 
   const delivery = await resendResponse.json().catch(() => null)
 
-  return jsonResponse({
+  return response.status(200).json({
     ok: true,
     submission,
     deliveryId: delivery?.id ?? null,
