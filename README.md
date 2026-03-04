@@ -17,22 +17,26 @@ The waitlist form now posts to a Vercel function at `/api/waitlist`.
 
 - the client validates `email` and `twitchUsername`
 - the server re-validates the payload before delivery
-- the Vercel function sends a notification email through Resend
+- the Vercel function syncs the contact to Brevo
 - successful submissions are still cached in `localStorage` so repeat visitors see the saved state
 - local `vite` development falls back to a browser-only save when `/api/waitlist` is unavailable
 
-Default waitlist destination email:
+Brevo list defaults:
 
-- `subnudge@frozair.xyz`
+- `BREVO_LIST_ID=3`
 
-Required environment variables for deployed email delivery:
+Required environment variables for deployed waitlist sync:
 
-- `RESEND_API_KEY`
-- `WAITLIST_FROM_EMAIL`
+- `BREVO_API_KEY`
 
 Optional environment variable:
 
-- `WAITLIST_TO_EMAIL` (defaults to `subnudge@frozair.xyz`)
+- `BREVO_LIST_ID` (defaults to `3`)
+- `BREVO_TWITCH_ATTRIBUTE` (defaults to `TWITCH_USERNAME`)
+
+Brevo requirement:
+
+- create a Text contact attribute named `TWITCH_USERNAME` (or set `BREVO_TWITCH_ATTRIBUTE` to your existing attribute key)
 
 ## Local Development
 
@@ -67,7 +71,7 @@ Examples (these will attempt to deep-link into the SubNudge app while preserving
 - security headers
 - an explicit rewrite for `/twitch/callback` to `/index.html`
 
-For production waitlist delivery, add the environment variables above in the Vercel project settings.
+For production waitlist sync, add the environment variables above in the Vercel project settings.
 
 ## Git Workflow
 

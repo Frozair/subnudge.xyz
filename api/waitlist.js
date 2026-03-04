@@ -2,7 +2,8 @@ import { validateWaitlistPayload } from '../src/lib/validation.js'
 
 const WAITLIST_SOURCE = 'subnudge.xyz-waitlist'
 const WAITLIST_VERSION = 2
-const DEFAULT_TO_EMAIL = 'subnudge@frozair.xyz'
+const DEFAULT_BREVO_LIST_ID = 3
+const DEFAULT_TWITCH_ATTRIBUTE = 'TWITCH_USERNAME'
 
 function buildSubmission(payload) {
   return {
@@ -11,18 +12,6 @@ function buildSubmission(payload) {
     source: WAITLIST_SOURCE,
     version: WAITLIST_VERSION,
   }
-}
-
-function buildWaitlistEmail(submission) {
-  return [
-    'New SubNudge waitlist submission',
-    '',
-    `Email: ${submission.email}`,
-    `Twitch: @${submission.twitchUsername}`,
-    `Submitted: ${submission.submittedAt}`,
-    `Source: ${submission.source}`,
-    `Version: ${submission.version}`,
-  ].join('\n')
 }
 
 function readJsonBody(request) {
@@ -60,12 +49,13 @@ export default async function handler(request, response) {
     })
   }
 
-  const resendApiKey = process.env.RESEND_API_KEY
-  const fromEmail = process.env.WAITLIST_FROM_EMAIL
-  const toEmail = process.env.WAITLIST_TO_EMAIL || DEFAULT_TO_EMAIL
+  const brevoApiKey = process.env.BREVO_API_KEY
+  const brevoListIdRaw = process.env.BREVO_LIST_ID ?? String(DEFAULT_BREVO_LIST_ID)
+  const brevoListId = Number.parseInt(brevoListIdRaw, 10)
+  const twitchAttributeName = process.env.BREVO_TWITCH_ATTRIBUTE || DEFAULT_TWITCH_ATTRIBUTE
 
-  if (!resendApiKey || !fromEmail) {
-    console.error('Waitlist delivery is not configured. Missing RESEND_API_KEY or WAITLIST_FROM_EMAIL.')
+  if (!brevoApiKey || !Number.isInteger(brevoListId) || brevoListId <= 0) {
+    console.error('Waitlist delivery is not configured. Missing BREVO_API_KEY or BREVO_LIST_ID.')
     return response.status(503).json({
       ok: false,
       message: 'Waitlist delivery is not configured yet.',
@@ -73,34 +63,38 @@ export default async function handler(request, response) {
   }
 
   const submission = buildSubmission(result.normalized)
-  const resendResponse = await fetch('https://api.resend.com/emails', {
+  const brevoResponse = await fetch('https://api.brevo.com/v3/contacts', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${resendApiKey}`,
+      'api-key': brevoApiKey,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      subject: `New SubNudge waitlist submission: @${submission.twitchUsername}`,
-      text: buildWaitlistEmail(submission),
+      email: submission.email,
+      attributes: {
+        [twitchAttributeName]: submission.twitchUsername,
+      },
+      listIds: [brevoListId],
+      updateEnabled: true,
+      emailBlacklisted: false,
     }),
   })
 
-  if (!resendResponse.ok) {
-    const errorDetails = await resendResponse.text().catch(() => '')
-    console.error('Waitlist email delivery failed.', resendResponse.status, errorDetails)
+  if (!brevoResponse.ok) {
+    const errorDetails = await brevoResponse.text().catch(() => '')
+    console.error('Waitlist Brevo sync failed.', brevoResponse.status, errorDetails)
     return response.status(502).json({
       ok: false,
       message: 'We could not save your waitlist spot. Please try again in a moment.',
     })
   }
 
-  const delivery = await resendResponse.json().catch(() => null)
+  const brevoResult = await brevoResponse.json().catch(() => null)
 
   return response.status(200).json({
     ok: true,
     submission,
-    deliveryId: delivery?.id ?? null,
+    deliveryId: null,
+    contactId: brevoResult?.id ?? null,
   })
 }
