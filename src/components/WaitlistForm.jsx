@@ -78,14 +78,6 @@ async function submitWaitlist(payload) {
   }
 }
 
-function formatTimestamp(value) {
-  try {
-    return new Date(value).toLocaleString()
-  } catch {
-    return value
-  }
-}
-
 export default function WaitlistForm({ compact = false }) {
   const [form, setForm] = useState({ email: '', twitchUsername: '' })
   const [errors, setErrors] = useState({})
@@ -194,76 +186,78 @@ export default function WaitlistForm({ compact = false }) {
             <div>
               <p className="font-semibold">You&apos;re on the list.</p>
               <p className="mt-1 text-ink/75">
-                {localOnlySubmission ? 'Saved locally in this browser as ' : 'Sent to the SubNudge waitlist inbox as '}
-                <span className="font-medium text-ink">{submitted.email}</span> (Twitch:{' '}
-                <span className="font-medium text-ink">@{submitted.twitchUsername}</span>).
+                Thanks for joining. We&apos;ll reach out when early access opens.
               </p>
-              <p className="mt-1 text-xs text-ink/60">
-                Submitted: {formatTimestamp(submitted.submittedAt)}
-              </p>
+              {localOnlySubmission ? (
+                <p className="mt-1 text-xs text-ink/60">Saved locally for localhost testing.</p>
+              ) : null}
             </div>
           </div>
         </div>
       ) : null}
 
       <form className={compact ? 'mt-4 space-y-3.5' : 'mt-5 space-y-4'} onSubmit={handleSubmit} noValidate>
-        <div>
-          <label htmlFor="email" className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}>
-            Email
-          </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
-            <Mail className="h-4 w-4 text-ink/45" aria-hidden="true" />
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@creatormail.com"
-              value={form.email}
-              onChange={handleChange}
-              disabled={Boolean(submitted) || isSubmitting}
-              aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? 'email-error' : undefined}
-              className="w-full border-0 bg-transparent p-0 text-sm text-ink outline-none placeholder:text-ink/35"
-            />
+        {!submitted ? (
+          <div>
+            <label htmlFor="email" className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}>
+              Email
+            </label>
+            <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
+              <Mail className="h-4 w-4 text-ink/45" aria-hidden="true" />
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@creatormail.com"
+                value={form.email}
+                onChange={handleChange}
+                disabled={Boolean(submitted) || isSubmitting}
+                aria-invalid={Boolean(errors.email)}
+                aria-describedby={errors.email ? 'email-error' : undefined}
+                className="w-full border-0 bg-transparent p-0 text-sm text-ink outline-none placeholder:text-ink/35"
+              />
+            </div>
+            {errors.email ? (
+              <p id="email-error" className="mt-2 text-xs text-coral">
+                {errors.email}
+              </p>
+            ) : null}
           </div>
-          {errors.email ? (
-            <p id="email-error" className="mt-2 text-xs text-coral">
-              {errors.email}
-            </p>
-          ) : null}
-        </div>
+        ) : null}
 
-        <div>
-          <label
-            htmlFor="twitchUsername"
-            className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}
-          >
-            Twitch username
-          </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
-            <Tv2 className="h-4 w-4 text-ink/45" aria-hidden="true" />
-            <span className="text-sm text-ink/50">@</span>
-            <input
-              id="twitchUsername"
-              name="twitchUsername"
-              type="text"
-              autoComplete="off"
-              placeholder="yourchannel"
-              value={form.twitchUsername}
-              onChange={handleChange}
-              disabled={Boolean(submitted) || isSubmitting}
-              aria-invalid={Boolean(errors.twitchUsername)}
-              aria-describedby={errors.twitchUsername ? 'twitch-error' : undefined}
-              className="w-full border-0 bg-transparent p-0 text-sm text-ink outline-none placeholder:text-ink/35"
-            />
+        {!submitted ? (
+          <div>
+            <label
+              htmlFor="twitchUsername"
+              className={compact ? 'sr-only' : 'mb-2 block text-sm font-medium text-ink'}
+            >
+              Twitch username
+            </label>
+            <div className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2.5 focus-within:border-sky focus-within:ring-2 focus-within:ring-sky/20">
+              <Tv2 className="h-4 w-4 text-ink/45" aria-hidden="true" />
+              <span className="text-sm text-ink/50">@</span>
+              <input
+                id="twitchUsername"
+                name="twitchUsername"
+                type="text"
+                autoComplete="off"
+                placeholder="yourchannel"
+                value={form.twitchUsername}
+                onChange={handleChange}
+                disabled={Boolean(submitted) || isSubmitting}
+                aria-invalid={Boolean(errors.twitchUsername)}
+                aria-describedby={errors.twitchUsername ? 'twitch-error' : undefined}
+                className="w-full border-0 bg-transparent p-0 text-sm text-ink outline-none placeholder:text-ink/35"
+              />
+            </div>
+            {errors.twitchUsername ? (
+              <p id="twitch-error" className="mt-2 text-xs text-coral">
+                {errors.twitchUsername}
+              </p>
+            ) : null}
           </div>
-          {errors.twitchUsername ? (
-            <p id="twitch-error" className="mt-2 text-xs text-coral">
-              {errors.twitchUsername}
-            </p>
-          ) : null}
-        </div>
+        ) : null}
 
         {submitError ? (
           <p className="rounded-2xl border border-coral/30 bg-coral/10 px-3 py-2 text-xs text-coral">
@@ -291,16 +285,8 @@ export default function WaitlistForm({ compact = false }) {
           )}
         </button>
 
-        {!compact ? (
-          <p className="text-xs leading-5 text-ink/60">
-            Delivered to the waitlist inbox on Vercel. On localhost without the API, it falls back to a browser save.
-          </p>
-        ) : null}
-        {compact ? (
-          <p className="text-[11px] leading-4 text-ink/50">
-            Hosted on Vercel. Localhost falls back to an in-browser save.
-          </p>
-        ) : null}
+        {!compact ? <p className="text-xs leading-5 text-ink/60">No spam. Only early access updates.</p> : null}
+        {compact ? <p className="text-[11px] leading-4 text-ink/50">No spam. Only early access updates.</p> : null}
       </form>
     </div>
   )
