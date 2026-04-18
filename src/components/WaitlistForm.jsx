@@ -4,6 +4,8 @@ import { getStoredWaitlistSubmission, saveWaitlistSubmission } from '../lib/stor
 import { validateWaitlistPayload } from '../lib/validation'
 
 const LOCAL_WAITLIST_SOURCE = 'subnudge.xyz-waitlist-local'
+const WAITLIST_ATTRIBUTION_STORAGE_KEY = 'subnudge.waitlist.attribution'
+const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
 
 function canUseLocalWaitlistFallback() {
   if (typeof window === 'undefined') {
@@ -22,6 +24,83 @@ function saveWaitlistSubmissionLocally(payload) {
   }
 
   return saveWaitlistSubmission(record)
+}
+
+function getLandingPath() {
+  if (typeof window === 'undefined') {
+    return ''
+  }
+
+  return `${window.location.pathname}${window.location.search}` || '/'
+}
+
+function readStoredAttribution() {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const raw = window.sessionStorage.getItem(WAITLIST_ATTRIBUTION_STORAGE_KEY)
+    if (!raw) {
+      return null
+    }
+
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function saveAttribution(attribution) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.sessionStorage.setItem(WAITLIST_ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution))
+  } catch {
+    // Attribution is useful but should never block waitlist signup.
+  }
+}
+
+function readCurrentAttribution() {
+  if (typeof window === 'undefined') {
+    return {
+      utm_source: '',
+      utm_medium: '',
+      utm_campaign: '',
+      utm_content: '',
+      utm_term: '',
+      referrer: '',
+      landingPath: '',
+    }
+  }
+
+  const params = new URLSearchParams(window.location.search)
+
+  return {
+    utm_source: params.get('utm_source') ?? '',
+    utm_medium: params.get('utm_medium') ?? '',
+    utm_campaign: params.get('utm_campaign') ?? '',
+    utm_content: params.get('utm_content') ?? '',
+    utm_term: params.get('utm_term') ?? '',
+    referrer: document.referrer ?? '',
+    landingPath: getLandingPath(),
+  }
+}
+
+function getWaitlistAttribution() {
+  const current = readCurrentAttribution()
+  const stored = readStoredAttribution()
+  const currentHasUtm = UTM_FIELDS.some((field) => Boolean(current[field]))
+  const attribution = stored && !currentHasUtm ? { ...current, ...stored } : current
+
+  if (!stored || currentHasUtm) {
+    saveAttribution(attribution)
+  }
+
+  return attribution
 }
 
 function isLocalOnlySubmission(record) {
@@ -116,7 +195,10 @@ export default function WaitlistForm({ compact = false }) {
       return
     }
 
-    const result = validateWaitlistPayload(form)
+    const result = validateWaitlistPayload({
+      ...form,
+      attribution: getWaitlistAttribution(),
+    })
     if (!result.isValid) {
       setErrors(result.errors)
       return
@@ -281,7 +363,7 @@ export default function WaitlistForm({ compact = false }) {
           ) : submitted ? (
             localOnlySubmission ? 'Saved locally for localhost' : "You're on the waitlist"
           ) : (
-            compact ? 'Protect my monthly revenue' : 'Join the waitlist'
+            compact ? 'Join the creator beta' : 'Join the waitlist'
           )}
         </button>
 

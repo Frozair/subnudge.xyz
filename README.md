@@ -7,36 +7,50 @@ SubNudge waiting-list site and Twitch OAuth callback handoff page.
 This is a standalone Vite + React site for:
 
 - the public waitlist landing page (`/`)
+- practical beta trust pages (`/privacy` and `/support`)
 - a Twitch OAuth callback route (`/twitch/callback`) that hands off to the native app
 
 The main product app lives in a separate repo at `/Users/Frozair/dev/subnudge`.
 
-## Current Waitlist Behavior (v2)
+## Current Waitlist Behavior (v4)
 
 The waitlist form now posts to a Vercel function at `/api/waitlist`.
 
 - the client validates `email` and `twitchUsername`
+- the client captures `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, referrer, and landing path
 - the server re-validates the payload before delivery
-- the Vercel function syncs the contact to Brevo
+- the Vercel function submits the signup to Formspark
+- optional Resend welcome emails can confirm that creators are on the waitlist
+- welcome-email failures are logged but do not fail the signup when Formspark accepted the submission
 - successful submissions are still cached in `localStorage` so repeat visitors see the saved state
 - local `vite` development falls back to a browser-only save when `/api/waitlist` is unavailable
 
-Brevo list defaults:
+Formspark defaults:
 
-- `BREVO_LIST_ID=3`
+- `FORMSPARK_FORM_ID=IEoVxm2QN`
 
 Required environment variables for deployed waitlist sync:
 
-- `BREVO_API_KEY`
+- None when using the default Formspark form ID above.
 
-Optional environment variable:
+Optional environment variables:
 
-- `BREVO_LIST_ID` (defaults to `3`)
-- `BREVO_TWITCH_ATTRIBUTE` (defaults to `TWITCH_USERNAME`)
+- `FORMSPARK_FORM_ID` (defaults to `IEoVxm2QN`)
+- `FORMSPARK_ACTION_URL` (overrides the default `https://submit-form.com/{form-id}` endpoint)
+- `RESEND_API_KEY` (enables welcome emails)
+- `WAITLIST_WELCOME_FROM_EMAIL` (required when `RESEND_API_KEY` is set)
+- `WAITLIST_WELCOME_FROM_NAME` (defaults to `SubNudge`)
+- `WAITLIST_WELCOME_REPLY_TO_EMAIL` (optional reply-to address for waitlist welcome emails)
 
-Brevo requirement:
+Formspark requirement:
 
-- create a Text contact attribute named `TWITCH_USERNAME` (or set `BREVO_TWITCH_ATTRIBUTE` to your existing attribute key)
+- confirm the Formspark form `IEoVxm2QN` exists and has notification/export settings configured as desired
+- team notification emails should be configured in the Formspark dashboard
+
+Resend requirement:
+
+- create a Resend API key and set `RESEND_API_KEY`
+- verify the sender domain or sender email used by `WAITLIST_WELCOME_FROM_EMAIL`
 
 ## Local Development
 
@@ -69,9 +83,23 @@ Examples (these will attempt to deep-link into the SubNudge app while preserving
 
 - Vite build/output settings
 - security headers
-- an explicit rewrite for `/twitch/callback` to `/index.html`
+- explicit rewrites for `/privacy`, `/support`, and `/twitch/callback` to `/index.html`
 
-For production waitlist sync, add the environment variables above in the Vercel project settings.
+For production waitlist sync and welcome email delivery, add the environment variables above in the Vercel project settings.
+
+## Production Setup Checklist
+
+- Confirm the Formspark form ID is `IEoVxm2QN`, or set `FORMSPARK_FORM_ID` / `FORMSPARK_ACTION_URL` in Vercel Production.
+- Configure Formspark notification recipients and exports in the Formspark dashboard.
+- Create a Resend API key and set `RESEND_API_KEY` in Vercel Production if welcome emails should send automatically.
+- Verify the sender domain or sender email used by `WAITLIST_WELCOME_FROM_EMAIL` in Resend.
+- Set `WAITLIST_WELCOME_FROM_EMAIL`, `WAITLIST_WELCOME_FROM_NAME`, and optionally `WAITLIST_WELCOME_REPLY_TO_EMAIL`.
+- Redeploy after any Vercel env changes.
+- Test in an incognito window with a unique email address and a URL containing UTM parameters.
+
+Support email:
+
+- The site currently uses `support@subnudge.xyz` from `src/lib/siteConfig.js`; update that constant if the real support address is different.
 
 ## Git Workflow
 
